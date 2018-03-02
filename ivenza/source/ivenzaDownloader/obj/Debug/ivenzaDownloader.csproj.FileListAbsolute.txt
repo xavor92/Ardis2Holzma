@@ -1,0 +1,6 @@
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Debug\ivenzaDownloader.exe.config
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Debug\ivenzaDownloader.exe
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Debug\ivenzaDownloader.pdb
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\obj\Debug\ivenzaDownloader.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\obj\Debug\ivenzaDownloader.exe
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\obj\Debug\ivenzaDownloader.pdb

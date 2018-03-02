@@ -1,0 +1,5 @@
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Release\ivenzaDownloader.exe.config
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Release\ivenzaDownloader.exe
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\bin\Release\ivenzaDownloader.pdb
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\obj\Release\ivenzaDownloader.exe
+C:\Users\Daniel\Desktop\ivenzaDownloader\ivenzaDownloader\obj\Release\ivenzaDownloader.pdb
