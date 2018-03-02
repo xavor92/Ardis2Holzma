@@ -20,7 +20,7 @@ private slots:
 
     void on_infileButton_clicked();
 
-    void on_infileLine_textChanged(const QString &arg1);
+    void on_infileLine_textChanged();
 
     void on_multiButton_clicked();
 
@@ -30,17 +30,23 @@ private slots:
 
     void on_outfileButton_clicked();
 
-    void on_sheetLine_textChanged(const QString &arg1);
+    void on_byBatch_clicked();
 
-    void on_sheetButton_clicked();
+    void on_bySchrank_number_clicked();
 
-    void on_convertsheetButton_clicked();
+    void on_byRefNumber_clicked();
 
-    void on_kombiBox_stateChanged(int arg1);
+    void on_byBEM2_clicked();
 
-    void on_outsheetfileButton_clicked();
+    void on_changePathLabelButton_clicked();
 
-    void on_outsheetLine_textChanged(const QString &arg1);
+    void on_downloadButton_clicked();
+
+    void processFinished();
+
+    void downloaderData();
+
+    void on_serviceButton_clicked();
 
 private:
     Ui::MainWindow *ui;
