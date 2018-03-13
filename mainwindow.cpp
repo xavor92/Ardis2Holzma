@@ -17,9 +17,7 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 
-
-
-//
+//Part
 struct part {
     int number;     //Fortlaufende Nummer
     int A,R;        //A Anzahl, R Rotation
@@ -39,7 +37,6 @@ struct part {
     QString SURFACE;
     QString Kommission, Kunde; //Manuelle Einträge
 };
-
 
 //Material
 struct mat {
@@ -80,7 +77,6 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->hide();
     ui->setupUi(this);
     ui->bySchrank_number->setChecked(true);
-    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     pathDB = settings.value("pathDB").toString();
     pathLabels = settings.value("pathLabels").toString();
     pathOutput = settings.value("pathOutput").toString();
@@ -326,13 +322,13 @@ void MainWindow::on_infileLine_textChanged()
     ui->obj_count->setText(count);
     select_list.clear();
     QList<part>::iterator iterate = obj_list.begin();
-    for(iterate; iterate != obj_list.end(); iterate++){
+    for(; iterate != obj_list.end(); iterate++){
         if(!select_list.contains(iterate->BEM3))
             select_list.append(iterate->BEM3);
     }
     QList<QString>::iterator iterate_strings = select_list.begin();
     ui->schrank_select->clear();
-    for(iterate_strings; iterate_strings != select_list.end(); iterate_strings++)
+    for(; iterate_strings != select_list.end(); iterate_strings++)
         ui->schrank_select->insertItem(0, *iterate_strings);
 }
 
@@ -361,13 +357,13 @@ void MainWindow::on_multiButton_clicked()
         QString compare_to = ui->schrank_select->currentText();
         if(ui->byBatch->isChecked()){
             QList<part>::iterator iterate = obj_list.begin();
-            for(iterate; iterate != obj_list.end(); iterate++){
+            for(; iterate != obj_list.end(); iterate++){
                 iterate->A = iterate->A * multi;
                 counter++;
             }
         } else if(ui->bySchrank_number->isChecked()) {
             QList<part>::iterator iterate = obj_list.begin();
-            for(iterate; iterate != obj_list.end(); iterate++){
+            for(; iterate != obj_list.end(); iterate++){
                 if(iterate->BEM3 == compare_to){
                     iterate->A = iterate->A * multi;
                     counter++;
@@ -375,7 +371,7 @@ void MainWindow::on_multiButton_clicked()
             }
         } else if(ui->byRefNumber->isChecked()) {
             QList<part>::iterator iterate = obj_list.begin();
-            for(iterate; iterate != obj_list.end(); iterate++){
+            for(; iterate != obj_list.end(); iterate++){
                 if(iterate->REF == compare_to){
                     iterate->A = iterate->A * multi;
                     counter++;
@@ -383,7 +379,7 @@ void MainWindow::on_multiButton_clicked()
             }
         } else if(ui->byBEM2->isChecked()){
             QList<part>::iterator iterate = obj_list.begin();
-            for(iterate; iterate != obj_list.end(); iterate++){
+            for(; iterate != obj_list.end(); iterate++){
                 if(iterate->jobNumber == compare_to){
                     iterate->A = iterate->A * multi;
                     counter++;
@@ -609,13 +605,13 @@ void MainWindow::on_bySchrank_number_clicked()
     ui->schrank_select->setEnabled(true);
     select_list.clear();
     QList<part>::iterator iterate = obj_list.begin();
-    for(iterate; iterate != obj_list.end(); iterate++){
+    for(; iterate != obj_list.end(); iterate++){
         if(!select_list.contains(iterate->BEM3))
             select_list.append(iterate->BEM3);
     }
     QList<QString>::iterator iterate_strings = select_list.begin();
     ui->schrank_select->clear();
-    for(iterate_strings; iterate_strings != select_list.end(); iterate_strings++)
+    for(; iterate_strings != select_list.end(); iterate_strings++)
          ui->schrank_select->insertItem(0, *iterate_strings);
 }
 
@@ -624,13 +620,13 @@ void MainWindow::on_byRefNumber_clicked()
     ui->schrank_select->setEnabled(true);
     select_list.clear();
     QList<part>::iterator iterate = obj_list.begin();
-    for(iterate; iterate != obj_list.end(); iterate++){
+    for(; iterate != obj_list.end(); iterate++){
         if(!select_list.contains(iterate->REF))
             select_list.append(iterate->REF);
     }
     QList<QString>::iterator iterate_strings = select_list.begin();
     ui->schrank_select->clear();
-    for(iterate_strings; iterate_strings != select_list.end(); iterate_strings++)
+    for(; iterate_strings != select_list.end(); iterate_strings++)
          ui->schrank_select->insertItem(0, *iterate_strings);
 }
 
@@ -639,13 +635,13 @@ void MainWindow::on_byBEM2_clicked()
     ui->schrank_select->setEnabled(true);
     select_list.clear();
     QList<part>::iterator iterate = obj_list.begin();
-    for(iterate; iterate != obj_list.end(); iterate++){
+    for(; iterate != obj_list.end(); iterate++){
         if(!select_list.contains(iterate->jobNumber))
             select_list.append(iterate->jobNumber);
     }
     QList<QString>::iterator iterate_strings = select_list.begin();
     ui->schrank_select->clear();
-    for(iterate_strings; iterate_strings != select_list.end(); iterate_strings++)
+    for(; iterate_strings != select_list.end(); iterate_strings++)
          ui->schrank_select->insertItem(0, *iterate_strings);
 }
 
