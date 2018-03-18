@@ -462,7 +462,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Standardpfad Ivenza Teileliste</string>
+             <string>Standardpfad Eingabe Datei</string>
             </property>
            </widget>
           </item>
@@ -490,7 +490,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>Standard-Speicherpfad</string>
+             <string>Standardpfad Ausgabedatei</string>
             </property>
            </widget>
           </item>
