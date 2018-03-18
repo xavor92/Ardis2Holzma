@@ -34,6 +34,7 @@ private slots:
     void on_serviceButton_clicked();
     void on_changeDefaultInputPathButton_clicked();
     void on_changePathSavingButton_clicked();
+    void on_SaveDBButton_clicked();
 
 private:
     Ui::MainWindow *ui;

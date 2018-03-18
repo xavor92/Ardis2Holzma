@@ -479,7 +479,7 @@ void MainWindow::on_convertButton_clicked()
     mat_changed = true;
     if(new_materials){
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen. \nWollen sie die neuen Materialen jetzt definieren oder unverändert in die Ausgabedatei übernehmen?");
+        reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen.\nWollen sie die neuen Materialen jetzt definieren?\nWenn sie 'Nein' wählen, werden die Materialien unverändert übernommen.");
         if (reply == QMessageBox::Yes){
             QList<mat>::iterator iterate_mat = mat_list.begin();
             for(iterate_mat = mat_list.begin();iterate_mat != mat_list.end(); iterate_mat++){
@@ -527,25 +527,23 @@ void MainWindow::on_convertButton_clicked()
             }
         }
     }
-    for(iterate_obj = obj_list.begin(); iterate_obj != obj_list.end(); iterate_obj++){
-        //qDebug() << iterate_obj->number << iterate_obj->MAT << endl;
-    }
-    if(new_materials){
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Materialienobj_list speichern?", "Sollen die neu hinzugefügten Materialien in die Datenbank geschrieben werden?");
-        if (reply == QMessageBox::Yes){
-            QList<mat>::iterator iterate_mat = mat_list.begin();
-            QFile dbFile(ui->dbLine->text());
-            dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
-            QTextStream out(&dbFile);
-            for(iterate_mat = mat_list.begin();iterate_mat != mat_list.end(); iterate_mat++){
-                out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
-            }
-            dbFile.close();
-        }
-    }
-    QMessageBox::information(this, "Erfolgreich umgewandelt", "Alle Materialien erfolgreich umgewandelt");
     ui->convertButton->setDisabled(true);
+}
+
+void MainWindow::on_SaveDBButton_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Aktuelle Materialdatenbank speichern?", "Soll die aktuelle Datenbank geschrieben werden?");
+    if (reply == QMessageBox::Yes){
+        QList<mat>::iterator iterate_mat = mat_list.begin();
+        QFile dbFile(ui->dbLine->text());
+        dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
+        QTextStream out(&dbFile);
+        for(iterate_mat = mat_list.begin();iterate_mat != mat_list.end(); iterate_mat++){
+            out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
+        }
+        dbFile.close();
+    }
 }
 
 void MainWindow::on_outfileButton_clicked()
