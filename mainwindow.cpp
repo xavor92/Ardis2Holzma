@@ -74,14 +74,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    statusBar()->hide();
     ui->setupUi(this);
     ui->bySchrank_number->setChecked(true);
+    ui->MainVertRight_2->hide();
+
+
     pathDB = settings.value("pathDB").toString();
     pathLabels = settings.value("pathLabels").toString();
     pathOutput = settings.value("pathOutput").toString();
-    ui->downloaderOutputLabel->hide();
-    ui->downloaderOutput->hide();
     //qDebug() << pathDB;
     pathInputFile = settings.value("pathInputFile").toString();
     if (!pathLabels.isEmpty()) {
@@ -682,22 +682,13 @@ void MainWindow::on_downloadButton_clicked()
 
 void MainWindow::on_serviceButton_clicked()
 {
-    if(service_mode){
+    if(service_mode)
+    {
         service_mode = false;
-        ui->dbButton->setDisabled(true);
-        ui->dbLine->setReadOnly(true);
-        ui->changePathLabelButton->setDisabled(true);
-        ui->pathLabelLine->setReadOnly(true);
-        ui->downloaderOutputLabel->hide();
-        ui->downloaderOutput->hide();
+        ui->MainVertRight_2->hide();
     } else {
         service_mode = true;
-        ui->pathLabelLine->setReadOnly(false);
-        ui->dbButton->setEnabled(true);
-        ui->changePathLabelButton->setEnabled(true);
-        ui->dbLine->setReadOnly(false);
-        ui->downloaderOutputLabel->show();
-        ui->downloaderOutput->show();
+        ui->MainVertRight_2->show();
     }
 }
 

@@ -6,28 +6,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>889</width>
-    <height>484</height>
+    <width>700</width>
+    <height>542</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>1</horstretch>
+    <verstretch>1</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Ardis2Holzma</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>1</horstretch>
+     <verstretch>1</verstretch>
+    </sizepolicy>
+   </property>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>861</width>
-      <height>451</height>
+      <width>671</width>
+      <height>521</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="MainHorLayout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="MainVertLeft">
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="4">
+          <widget class="QPushButton" name="serviceButton">
+           <property name="text">
+            <string>Wartung</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_9">
            <property name="text">
@@ -49,17 +71,17 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="kundeLine">
+         <item row="2" column="2">
+          <widget class="QPushButton" name="infileButton">
            <property name="text">
-            <string>Bitte eintragen</string>
+            <string>Auswählen</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label">
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Teileliste/Ivenza</string>
+            <string>Anzahl Elemente</string>
            </property>
           </widget>
          </item>
@@ -76,17 +98,17 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="infileButton">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label">
            <property name="text">
-            <string>Auswählen</string>
+            <string>Teileliste/Ivenza</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_3">
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="kundeLine">
            <property name="text">
-            <string>Anzahl Elemente</string>
+            <string>Bitte eintragen</string>
            </property>
           </widget>
          </item>
@@ -103,42 +125,58 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="serviceButton">
-           <property name="text">
-            <string>Wartung</string>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-          </widget>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="1" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Anzahl anpassen</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
           <widget class="QRadioButton" name="byBatch">
            <property name="text">
             <string>alles</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QRadioButton" name="byBEM2">
            <property name="text">
             <string>Batch</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QRadioButton" name="byRefNumber">
            <property name="text">
             <string>Teilenummer</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="6" column="0">
           <widget class="QComboBox" name="schrank_select"/>
          </item>
-         <item row="6" column="0">
+         <item row="7" column="0">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLabel" name="label_7">
@@ -159,7 +197,7 @@
            </item>
           </layout>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QRadioButton" name="bySchrank_number">
            <property name="text">
             <string>Schranknummer</string>
@@ -167,48 +205,107 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Anzahl anpassen</string>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="multiButton">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Anzahl Anpassen</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="multiButton">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Anzahl Anpassen</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="convertButton">
-         <property name="enabled">
-          <bool>false</bool>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="acceptDrops">
-          <bool>false</bool>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Materialien umwandeln</string>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-        </widget>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="convertButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="acceptDrops">
+            <bool>false</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Materialien umwandeln</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -271,83 +368,93 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Materialien-Datenbank</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QLineEdit" name="dbLine">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="dbButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Ändern</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="2" column="1">
-          <widget class="QPushButton" name="changePathLabelButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Ändern</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Downloadpfad für Etiketten</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QLineEdit" name="pathLabelLine">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="downloaderOutputLabel">
-         <property name="text">
-          <string>Ausgabe des Downloaders</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextBrowser" name="downloaderOutput">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QWidget" name="MainVertRight_2" native="true">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="MainVertRight">
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Materialien-Datenbank</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLineEdit" name="dbLine">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="dbButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Ändern</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="2" column="1">
+           <widget class="QPushButton" name="changePathLabelButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Ändern</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Downloadpfad für Etiketten</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLineEdit" name="pathLabelLine">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="downloaderOutputLabel">
+          <property name="text">
+           <string>Ausgabe des Downloaders</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="downloaderOutput">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
