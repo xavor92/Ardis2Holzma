@@ -168,6 +168,7 @@ void MainWindow::on_infileButton_clicked()
     }
     QFileInfo info;
     info.setFile(infileName);
+    infileFileName = info.fileName();
     ui->infileLine->setText(info.fileName());
 }
 
