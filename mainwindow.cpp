@@ -75,6 +75,14 @@ void MainWindow::updatePathInputFile(QString path)
     settings.sync();
 }
 
+void MainWindow::updatePathOutputFile(QString path)
+{
+    pathOutput = path;
+    ui->pathSaving->setText(path);
+    settings.setValue("pathOutput", path);
+    settings.sync();
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -87,8 +95,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Settings
     pathDB = settings.value("pathDB").toString();
     pathLabels = settings.value("pathLabels").toString();
-    pathOutput = settings.value("pathOutput").toString();
-    updatePathInputFile(settings.value("pathInputFile").toString());
+    this->updatePathOutputFile(settings.value("pathOutput").toString());
+    this->updatePathInputFile(settings.value("pathInputFile").toString());
 
     if (!pathLabels.isEmpty()) {
         ui->pathLabelLine->setText(pathLabels);
@@ -156,6 +164,7 @@ void MainWindow::on_infileButton_clicked()
             QMessageBox::critical(this, tr("Error"), tr("Could not open file"));
             return;
         }
+        infile.close();
     }
     QFileInfo info;
     info.setFile(infileName);
@@ -391,10 +400,13 @@ void MainWindow::on_multiButton_clicked()
 
 void MainWindow::on_dbButton_clicked()
 {
+    /* TODO: Decide if this part can be deleted */
+    /*
     if(obj_list.size() == 0){
         QMessageBox::critical(this, "Achtung", "Keine Datei geöfffnet, bitte erst Datei auswählen");
         return;
     }
+    */
     dbfileName = QFileDialog::getOpenFileName(this, tr("Datei öffnen"), QString(),
                         tr("Mat-Datenbank(*.mdb);;Alle Dateien (*.*)"));
 
@@ -660,6 +672,16 @@ void MainWindow::on_changeDefaultInputPathButton_clicked()
     path = path + "/";
     if(!path.isEmpty()) {
         this->updatePathInputFile(path);
+    }
+}
+
+
+void MainWindow::on_changePathSavingButton_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Ausgabedaten", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    path = path + "/";
+    if(!path.isEmpty()) {
+        this->updatePathOutputFile(path);
     }
 }
 
