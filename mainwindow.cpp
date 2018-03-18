@@ -67,23 +67,29 @@ QProcess downloader;
 QString pathDB, pathInputFile, pathOutput, pathLabels;
 QSettings settings("Owestermann", "Ardis2Holzma");
 
-
-
+void MainWindow::updatePathInputFile(QString path)
+{
+    pathInputFile = path;
+    ui->InputFilePath->setText(path);
+    settings.setValue("pathInputFile", path);
+    settings.sync();
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    // basic UI Setup
     ui->setupUi(this);
     ui->bySchrank_number->setChecked(true);
     ui->MainVertRight_2->hide();
 
-
+    // Settings
     pathDB = settings.value("pathDB").toString();
     pathLabels = settings.value("pathLabels").toString();
     pathOutput = settings.value("pathOutput").toString();
-    //qDebug() << pathDB;
-    pathInputFile = settings.value("pathInputFile").toString();
+    updatePathInputFile(settings.value("pathInputFile").toString());
+
     if (!pathLabels.isEmpty()) {
         ui->pathLabelLine->setText(pathLabels);
     }
@@ -151,16 +157,9 @@ void MainWindow::on_infileButton_clicked()
             return;
         }
     }
-    //qDebug() << "Alter Wert: " << settings.value("pathInputFile").toString();
     QFileInfo info;
     info.setFile(infileName);
-    infileFileName = info.fileName();
-    //qDebug() << "Pfad: " << info.absolutePath();
-    settings.setValue("pathInputFile", info.absolutePath());
-    pathInputFile = info.absolutePath();
-    settings.sync();
-    //qDebug() << "Neuer Wert: " << settings.value("pathInputFile").toString();
-    ui->infileLine->setText(infileName);
+    ui->infileLine->setText(info.fileName());
 }
 
 void MainWindow::on_infileLine_textChanged()
@@ -653,7 +652,15 @@ void MainWindow::on_changePathLabelButton_clicked()
         settings.setValue("pathLabels", path);
         ui->pathLabelLine->setText(path);
     }
+}
 
+void MainWindow::on_changeDefaultInputPathButton_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Eingabedatein", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    path = path + "/";
+    if(!path.isEmpty()) {
+        this->updatePathInputFile(path);
+    }
 }
 
 void MainWindow::on_downloadButton_clicked()

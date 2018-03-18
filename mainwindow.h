@@ -32,9 +32,11 @@ private slots:
     void processFinished();
     void downloaderData();
     void on_serviceButton_clicked();
+    void on_changeDefaultInputPathButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    void updatePathInputFile(QString path);
 };
 
 #endif // MAINWINDOW_H
