@@ -401,14 +401,7 @@ void MainWindow::on_multiButton_clicked()
 
 void MainWindow::on_dbButton_clicked()
 {
-    /* TODO: Decide if this part can be deleted */
-    /*
-    if(obj_list.size() == 0){
-        QMessageBox::critical(this, "Achtung", "Keine Datei geöfffnet, bitte erst Datei auswählen");
-        return;
-    }
-    */
-    dbfileName = QFileDialog::getOpenFileName(this, tr("Datei öffnen"), QString(),
+    dbfileName = QFileDialog::getOpenFileName(this, tr("Datei öffnen"), pathDB,
                         tr("Mat-Datenbank(*.mdb);;Alle Dateien (*.*)"));
 
     if (!dbfileName.isEmpty()) {
@@ -657,7 +650,7 @@ void MainWindow::on_byBEM2_clicked()
 
 void MainWindow::on_changePathLabelButton_clicked()
 {
-    QString path = QFileDialog::getExistingDirectory(this, "Speicherort für Labels wählen", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString path = QFileDialog::getExistingDirectory(this, "Speicherort für Labels wählen", pathLabels, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     path = path + "/";
     if(!path.isEmpty()) {
         settings.setValue("pathLabels", path);
@@ -667,7 +660,7 @@ void MainWindow::on_changePathLabelButton_clicked()
 
 void MainWindow::on_changeDefaultInputPathButton_clicked()
 {
-    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Eingabedatein", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Eingabedatein", pathInputFile, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     path = path + "/";
     if(!path.isEmpty()) {
         this->updatePathInputFile(path);
@@ -677,7 +670,7 @@ void MainWindow::on_changeDefaultInputPathButton_clicked()
 
 void MainWindow::on_changePathSavingButton_clicked()
 {
-    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Ausgabedaten", QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString path = QFileDialog::getExistingDirectory(this, "Standardpfad für Ausgabedaten", pathOutput, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     path = path + "/";
     if(!path.isEmpty()) {
         this->updatePathOutputFile(path);
