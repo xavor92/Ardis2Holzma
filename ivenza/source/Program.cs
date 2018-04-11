@@ -39,7 +39,7 @@ namespace ivenzaDownloader
                 //Versucht jedes Bild runterzuladen
                 for (int i = 0; i < imagesIds.Count; i++)
                 {
-                    Console.WriteLine("Lade Bild {0} von {1}", i + 1, imagesIds.Count);
+                    Console.WriteLine("Lade Bild {0} von {1}, {2}.png", i + 1, imagesIds.Count, imagesIds[i]);
                     try
                     {
                         string imageUrl = settings.DownloadTemplate.Replace("{0}", imagesIds[i]);
@@ -85,7 +85,7 @@ namespace ivenzaDownloader
                 // this is an expected response, we are not autorized yet
             }
             client.UploadValues(settings.LoginPage, "POST", loginData);
-            
+
             return client;
         }
 
