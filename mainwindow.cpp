@@ -16,6 +16,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QCloseEvent>
 
 //Part
 struct part {
@@ -138,7 +139,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_quitbutton_clicked()
+void MainWindow::closeEvent (QCloseEvent *event)
 {
     if(downloader.state() == QProcess::Running)
     {
@@ -146,12 +147,16 @@ void MainWindow::on_quitbutton_clicked()
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.setText("Es werden noch Labels heruntergeladen. Das Beenden von Ardis2Holzma führt zum Abbrechen der Downloads. Wollen sie Ardis2Holzma wirklich beenden?");
         msgBox.setWindowTitle("Downloads laufen noch");
-        msgBox.setStandardButtons(QMessageBox::Abort | QMessageBox::Close);
-        msgBox.setDefaultButton(QMessageBox::Abort);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
         int clicked = msgBox.exec();
-        if (clicked == QMessageBox::Abort) return;
+        if (clicked == QMessageBox::No)
+        {
+            event->ignore();
+        } else {
+            event->accept();
+        }
     }
-    qApp->quit();
 }
 
 void MainWindow::on_infileButton_clicked()

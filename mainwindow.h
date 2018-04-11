@@ -16,7 +16,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_quitbutton_clicked();
     void on_infileButton_clicked();
     void on_infileLine_textChanged();
     void on_multiButton_clicked();
@@ -40,6 +39,7 @@ private:
     Ui::MainWindow *ui;
     void updatePathInputFile(QString path);
     void updatePathOutputFile(QString path);
+    void closeEvent (QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H
