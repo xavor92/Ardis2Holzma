@@ -740,18 +740,15 @@ void MainWindow::on_serviceButton_clicked()
 
 void MainWindow::downloaderData(){
     QString output(downloader.readAllStandardOutput());
-    QString status, max;
+    int status, max, id;
+
     ui->downloaderOutput->append(output);
-    //qDebug() << output;
-    int i = output.indexOf(" ", 6) + 1;         //Zweite Lücke +1 -> erste Zahl
-    while(output[i] != ' '){
-        status.append(output[i]);
-        i++;
-    }
-    //qDebug() << status;
-    i = output.indexOf("n") + 2;
-    max = output.mid(i);
-    //qDebug() << max;
-    ui->downloadProgress->setMaximum(max.toInt());
-    ui->downloadProgress->setValue(status.toInt());
+
+    QByteArray ba = output.toLatin1();
+    const char *char_ptr = ba.data();
+
+    sscanf(char_ptr, "Lade Bild %d von %d, %d.png", &status, &max, &id);
+
+    ui->downloadProgress->setMaximum(max);
+    ui->downloadProgress->setValue(status);
 }
