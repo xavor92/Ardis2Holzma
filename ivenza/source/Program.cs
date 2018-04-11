@@ -24,7 +24,8 @@ namespace ivenzaDownloader
             try
             {
                 Settings settings = new Settings();
-                LoadSettingsFromConfig(settings);
+
+                PrivateSettings.LoadPrivateSettings(settings);
                 LoadParameterFromConsole(settings, args);
                 createOutputDirectoryIfNotPresent(settings.OutputPath);
 
@@ -47,7 +48,7 @@ namespace ivenzaDownloader
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Fehler beim Herunterladen von Bild {0}. ID: {1}", i, imagesIds[i]);
+                        Console.WriteLine("Fehler beim Herunterladen von Bild {0}. ID: {1}:\n{2}", i, imagesIds[i], ex.Message);
                     }
                 }
             }
@@ -67,26 +68,25 @@ namespace ivenzaDownloader
             loginData.Add("j_password", settings.Passwort);
 
             var client = new CookieAwareWebClient();
-            client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-            client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36";
+            client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+            client.Headers["User-Agent"] = "Mozilla/5.0";
             client.BaseAddress = settings.URLBase;
-            client.Headers["Accept-Encoding"] = "gzip,deflate";
-            client.DownloadData(settings.URLTest);
+            client.Headers["Accept-Encoding"] = "gzip,deflate,br";
+            try
+            {
+                client.DownloadData(settings.URLTest);
+            }
+            catch (WebException ex)
+            {
+                if (((HttpWebResponse)ex.Response).StatusCode != HttpStatusCode.Forbidden)
+                {
+                    throw ex;
+                }
+                // this is an expected response, we are not autorized yet
+            }
             client.UploadValues(settings.LoginPage, "POST", loginData);
+            
             return client;
-        }
-
-        /// <summary>
-        /// Lädt Benutzername, Passwort, Downloadpfad und Login-URL aus der *.exe.config Datei
-        /// </summary>
-        private static void LoadSettingsFromConfig(Settings settings)
-        {
-            settings.User = ConfigurationSettings.AppSettings["user"];
-            settings.Passwort = ConfigurationSettings.AppSettings["password"];
-            settings.LoginPage = ConfigurationSettings.AppSettings["url-login"];
-            settings.DownloadTemplate = ConfigurationSettings.AppSettings["url-sw"];
-            settings.URLBase = ConfigurationSettings.AppSettings["url-base"];
-            settings.URLTest = ConfigurationSettings.AppSettings["url-test"];
         }
 
         /// <summary>

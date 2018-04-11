@@ -1,0 +1,19 @@
+namespace ivenzaDownloader
+{
+    class PrivateSettings
+    {
+
+        /// <summary>
+        /// Lädt Benutzername, Passwort, Downloadpfad und Login-URL
+        /// </summary>
+        public static void LoadPrivateSettings(Settings settings)
+        {
+            settings.User = "";
+            settings.Passwort = "";
+            settings.LoginPage = "/ivenza/j_security_check";
+            settings.DownloadTemplate = "/ivenza/servlet/ivenza/labels/productionItem-{0}/black-200.png";
+            settings.URLBase = "https://istare.ivenza.net";
+            settings.URLTest = "/ivenza/shop/personal/";
+        }
+    }
+}
