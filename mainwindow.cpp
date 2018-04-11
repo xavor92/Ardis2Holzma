@@ -26,7 +26,7 @@ struct part {
     QString B;      //Breite
     QString MAT;    //Material
     QString MAT_OLD;//Backup des Ursprungsmaterials
-    QString REF;    //Referenz Vollständig (PI#16939|FREE_SHELF)
+    QString REF;    //Referenz Vollständig (PI#16939)
     int refNumber;  //Referenz Number (16939)
     QString refString; //Ref String (FREE_SHELF)
     QString description; //Beschreibung aus BEM
@@ -195,7 +195,6 @@ void MainWindow::on_infileLine_textChanged()
             int inumber = snumber.toInt();
             if(open_part.number == inumber) { //Part bereits offen, also wieder zu
                 obj_list.push_back(open_part);
-                //qDebug() << open_part.number << " " << open_part.REF  << " " << open_part.refString << endl;
             } else {							// defaults noch setzen
                 open_part.number = inumber;
                 open_part.R = 0;
@@ -320,12 +319,19 @@ void MainWindow::on_infileLine_textChanged()
 
         }else if(line.indexOf("REF=") == 0)
         {
+            //old: REF=PI#47284|WALL_RIGHT
+            //new: REF=PI#47284
             open_part.REF = line.mid(line.indexOf("=") + 1, line.length() - line.indexOf("=") - 1);
-            if(line.indexOf("#") != -1 && line.indexOf("|") != -1){ //Standart-Format?
-                open_part.refString = line.mid(line.indexOf("|") + 1, line.length() - line.indexOf("|") - 1);
-                line_n = line.mid(line.indexOf("#") + 1, line.indexOf("|") - line.indexOf("#")-1);
-                //qDebug() << line_n << line_n.toInt() << endl;
-                open_part.refNumber = line_n.toInt();
+            if(line.indexOf("#") != -1){ //Standart-Format
+                QString right_part = line.mid(line.indexOf("#") + 1, -1); //47284|WALL_RIGHT or 47284
+                if (right_part.indexOf("|") != -1)
+                {
+                    open_part.refString = right_part.mid(right_part.indexOf("|") + 1, -1);
+
+                    open_part.refNumber = right_part.mid(0, right_part.indexOf("|")).toInt();
+                } else {
+                    open_part.refNumber = right_part.toInt();
+                }
             }
         }
         line = in.readLine();
