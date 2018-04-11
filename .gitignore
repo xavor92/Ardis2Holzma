@@ -37,3 +37,10 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
+# build file for ivenza downloader
+ivenza/source/bin
+ivenza/source/obj
+
+# private settings
+ivenza/source/Settings_values.cs
+

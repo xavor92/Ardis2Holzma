@@ -679,21 +679,35 @@ void MainWindow::on_changePathSavingButton_clicked()
 
 void MainWindow::on_downloadButton_clicked()
 {
-    QString dlfile = QDir::currentPath() + "/dlfiles/" + infileFileName+".dl";
-    //qDebug() << dlfile;
+    QString dlfolder = QDir::currentPath() + "/dlfiles/";
+
+    // create if it does not exist
+    if (!QDir(dlfolder).exists())
+        QDir().mkdir(dlfolder);
+
+    // create dlfile
+    QString dlfile = dlfolder + infileFileName+".dl";
     QFile dllist;
     dllist.setFileName(dlfile);
     if (!dllist.open(QIODevice::Truncate | QIODevice::WriteOnly)) {
         QMessageBox::critical(this, tr("Error"), tr("Could not open dlfile"));
         return;
     }
-
     QTextStream dllistout(&dllist);
     for(QList<part>::iterator iterate = obj_list.begin(); iterate != obj_list.end(); iterate++){
         dllistout << iterate->refNumber << endl;
     }
     dllist.close();
-    QString command = "ivenzaDownloader.exe -d \"" + dlfile + "\" -f \"" + ui->pathLabelLine->text() + "\"";
+
+    // start downloader
+    QString downloaderName = "ivenzaDownloader.exe";
+    if(!QFile(downloaderName).exists())
+    {
+        ui->downloaderOutput->append(QFileInfo(downloaderName).absoluteFilePath() + " seems to be missing.");
+        return;
+    }
+    QString command = downloaderName + " -d \"" + dlfile + "\" -f \"" + ui->pathLabelLine->text() + "\"";
+    qDebug() << command;
     downloader.start(command);
     downloader.setReadChannel(QProcess::StandardOutput);
 
