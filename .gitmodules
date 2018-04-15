@@ -1,0 +1,3 @@
+[submodule "IvenzaLabelDownloader"]
+	path = IvenzaLabelDownloader
+	url = git@github.com:xavor92/IvenzaLabelDownloader.git
