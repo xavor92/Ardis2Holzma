@@ -13,10 +13,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    editmatdb.cpp
+    editmatdb.cpp \
+    matdb.cpp
 
 HEADERS  += mainwindow.h \
-    editmatdb.h
+    editmatdb.h \
+    matdb.h
 
 FORMS    += mainwindow.ui \
     editmatdb.ui

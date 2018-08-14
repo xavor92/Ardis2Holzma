@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "editmatdb.h"
+#include "matdb.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,6 +46,8 @@ private:
     void updatePathOutputFile(QString path);
     void closeEvent (QCloseEvent *event);
     EditMatDB *editMatDBWindow;
+    MatDB *matDB;
+    QList<mat> *mat_list;
 };
 
 #endif // MAINWINDOW_H

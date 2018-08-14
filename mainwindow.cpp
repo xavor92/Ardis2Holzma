@@ -18,6 +18,8 @@
 #include <QFormLayout>
 #include <QCloseEvent>
 
+#include "matdb.h"
+
 //Part
 struct part {
     int number;     //Fortlaufende Nummer
@@ -39,12 +41,6 @@ struct part {
     QString Kommission, Kunde; //Manuelle Einträge
 };
 
-//Material
-struct mat {
-    QString matold;
-    QString matnew;
-    QString surface;
-};
 
 struct sheet {
     int number;
@@ -54,7 +50,6 @@ struct sheet {
 };
 
 QList<QString> select_list;
-QList<mat> mat_list;
 QList<part> obj_list;
 part open_part;
 QList<sheet>::iterator ite;
@@ -120,6 +115,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->updatePathOutputFile(settings.value("pathOutput").toString());
     this->updatePathInputFile(settings.value("pathInputFile").toString());
 
+    matDB = new MatDB(0);
+    mat_list = matDB->mat_list;
+
     if (!pathLabels.isEmpty()) {
         ui->pathLabelLine->setText(pathLabels);
     }
@@ -129,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
         if (!db.open(QIODevice::ReadOnly)) {
             ui->dbLine->setText("");
         }
-        if (readMatDB(&db, &mat_list))
+        if (readMatDB(&db, mat_list))
             qDebug() << "readMatDB failed in startup" << endl;
         db.close();
     }
@@ -433,7 +431,7 @@ void MainWindow::on_dbButton_clicked()
         }
         ui->dbLine->setText(dbfileName);
 
-        if (readMatDB(&db, &mat_list))
+        if (readMatDB(&db, mat_list))
             qDebug() << "readMatDB failed in startup" << endl;
 
         db.close();
@@ -449,25 +447,25 @@ void MainWindow::on_convertButton_clicked()
             return;
         }
     }
-    if(mat_list.isEmpty()){
+    if(mat_list->isEmpty()){
         QMessageBox::critical(this, tr("Fehler"), tr("Bitte erst eine Materialdatenbank öffnen"));
         return;
     }
     QList<part>::iterator iterate_obj = obj_list.begin();
-    QList<mat>::iterator iterate_mat = mat_list.begin();
+    QList<mat>::iterator iterate_mat = mat_list->begin();
     bool new_materials = false;
     for(iterate_obj = obj_list.begin(); iterate_obj != obj_list.end(); iterate_obj++){
-        for(iterate_mat = mat_list.begin(); iterate_mat != mat_list.end();iterate_mat++){
+        for(iterate_mat = mat_list->begin(); iterate_mat != mat_list->end();iterate_mat++){
             //qDebug() << iterate_obj->number <<"Vergleiche: " << iterate_obj->MAT << " mit " << iterate_mat->matold<< endl;
             if(iterate_obj->MAT == iterate_mat->matold) {
                 // we already know this material, check next object
                 break;
             }
-            if(iterate_mat == --mat_list.end()){
+            if(iterate_mat == --mat_list->end()){
                 // we reached the end of the material list, this must be a new one
                 mat new_mat;
                 new_mat.matold = iterate_obj->MAT;
-                mat_list.push_back(new_mat);
+                mat_list->push_back(new_mat);
                 new_materials = true;
                 break;
             }
@@ -478,8 +476,8 @@ void MainWindow::on_convertButton_clicked()
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen.\nWollen sie die neuen Materialen jetzt definieren?\nWenn sie 'Nein' wählen, werden die Materialien unverändert übernommen.");
         if (reply == QMessageBox::Yes){
-            QList<mat>::iterator iterate_mat = mat_list.begin();
-            for(iterate_mat = mat_list.begin();iterate_mat != mat_list.end(); iterate_mat++){
+            QList<mat>::iterator iterate_mat = mat_list->begin();
+            for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
                 if(iterate_mat->matnew.isEmpty()){
                     QDialog dialog(this);
                     // Use a layout allowing to have a label next to each field
@@ -516,7 +514,7 @@ void MainWindow::on_convertButton_clicked()
         }
     }
     for(iterate_obj = obj_list.begin(); iterate_obj != obj_list.end(); iterate_obj++){
-        for(iterate_mat = mat_list.begin(); iterate_mat != mat_list.end();iterate_mat++){
+        for(iterate_mat = mat_list->begin(); iterate_mat != mat_list->end();iterate_mat++){
             //qDebug() << iterate_obj->number <<"Vergleiche: " << iterate_obj->MAT << " mit " << iterate_mat->matold<< endl;
             if(iterate_obj->MAT == iterate_mat->matold && !iterate_mat->matnew.isEmpty()) {
                 iterate_obj->MAT = iterate_mat->matnew;
@@ -532,11 +530,11 @@ void MainWindow::on_SaveDBButton_clicked()
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Aktuelle Materialdatenbank speichern?", "Soll die aktuelle Datenbank geschrieben werden?");
     if (reply == QMessageBox::Yes){
-        QList<mat>::iterator iterate_mat = mat_list.begin();
+        QList<mat>::iterator iterate_mat = mat_list->begin();
         QFile dbFile(ui->dbLine->text());
         dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
         QTextStream out(&dbFile);
-        for(iterate_mat = mat_list.begin();iterate_mat != mat_list.end(); iterate_mat++){
+        for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
             out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
         }
         dbFile.close();
@@ -748,6 +746,6 @@ void MainWindow::downloaderData(){
 
 void MainWindow::on_EditMatDBButton_clicked()
 {
-    editMatDBWindow = new EditMatDB();
+    editMatDBWindow = new EditMatDB(this, matDB);
     editMatDBWindow->show();
 }
