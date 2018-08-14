@@ -476,41 +476,8 @@ void MainWindow::on_convertButton_clicked()
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen.\nWollen sie die neuen Materialen jetzt definieren?\nWenn sie 'Nein' wählen, werden die Materialien unverändert übernommen.");
         if (reply == QMessageBox::Yes){
-            QList<mat_t>::iterator iterate_mat = mat_list->begin();
-            for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
-                if(iterate_mat->matnew.isEmpty()){
-                    QDialog dialog(this);
-                    // Use a layout allowing to have a label next to each field
-                    QFormLayout form(&dialog);
-                    // Add some text above the fields
-                    form.addRow(new QLabel("Bitte sie fest für: " + iterate_mat->matold));
-
-                    // Add the lineEdits with their respective labels
-                    QList<QLineEdit *> fields;
-                    QLineEdit *lineEdit = new QLineEdit(&dialog);
-                    QString label = QString("Holzma-Material:");
-                    form.addRow(label, lineEdit);
-                    fields << lineEdit;
-                    lineEdit = new QLineEdit(&dialog);
-                    label = QString("Oberfläche:");
-                    form.addRow(label, lineEdit);
-                    fields << lineEdit;
-                    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-                    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                               Qt::Horizontal, &dialog);
-                    form.addRow(&buttonBox);
-                    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-                    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-                    // Show the dialog as modal
-
-                    if (dialog.exec() == QDialog::Accepted) {
-                        // If the user didn't dismiss the dialog, do something with the fields
-                        iterate_mat->matnew = fields[0]->text();
-                        iterate_mat->surface = fields[1]->text();
-                    } else { return;}
-                }
-            }
+            editMatDBWindow = new EditMatDB(this, matDB);
+            editMatDBWindow->show();
         }
     }
     for(iterate_obj = obj_list.begin(); iterate_obj != obj_list.end(); iterate_obj++){
@@ -535,7 +502,8 @@ void MainWindow::on_SaveDBButton_clicked()
         dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
         QTextStream out(&dbFile);
         for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
-            out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
+            if (!iterate_mat->matold.isEmpty())
+                out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
         }
         dbFile.close();
     }
