@@ -84,6 +84,27 @@ void MainWindow::updatePathOutputFile(QString path)
     settings.sync();
 }
 
+static int readMatDB(QFile *dbfile, QList<mat> *matlist)
+{
+    QTextStream dbstream(dbfile);
+    QString line2 = dbstream.readLine();
+    while(!line2.isNull()){
+        int firstDiv, secDiv;
+        firstDiv = line2.indexOf(";");
+        secDiv = line2.indexOf(";", firstDiv + 1);
+        QString alt = line2.mid(0,firstDiv);
+        QString neu = line2.mid(firstDiv + 1, secDiv - firstDiv - 1);
+        QString surface = line2.mid(secDiv +1, -1);
+        mat eintrag;
+        eintrag.matnew = neu;
+        eintrag.matold = alt;
+        eintrag.surface = surface;
+        matlist->push_back(eintrag);
+        line2 = dbstream.readLine();
+    }
+    return 0;
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -107,25 +128,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QFile db(pathDB);
         if (!db.open(QIODevice::ReadOnly)) {
             ui->dbLine->setText("");
-            return;
         }
-        QTextStream dbstream(&db);
-        QString line2 = dbstream.readLine();
-        while(!line2.isNull()){
-            int firstDiv, secDiv;
-            firstDiv = line2.indexOf(";");
-            secDiv = line2.indexOf(";", firstDiv + 1);
-            QString alt = line2.mid(0,firstDiv);
-            QString neu = line2.mid(firstDiv + 1, secDiv - firstDiv - 1);
-            QString surface = line2.mid(secDiv +1, -1);
-            mat eintrag;
-            eintrag.matnew = neu;
-            eintrag.matold = alt;
-            eintrag.surface = surface;
-            mat_list.push_back(eintrag);
-            //qDebug() << "Eingelesen: " << firstDiv << secDiv << neu << alt <<surface << mat_list.size() << endl;
-            line2 = dbstream.readLine();
-        }
+        if (readMatDB(&db, &mat_list))
+            qDebug() << "readMatDB failed in startup" << endl;
         db.close();
     }
     QObject::connect( &downloader, SIGNAL(finished(int,QProcess::ExitStatus)),
@@ -427,23 +432,10 @@ void MainWindow::on_dbButton_clicked()
             return;
         }
         ui->dbLine->setText(dbfileName);
-        QTextStream dbstream(&db);
-        QString line2 = dbstream.readLine();
-        while(!line2.isNull()){
-            int firstDiv, secDiv;
-            firstDiv = line2.indexOf(";");
-            secDiv = line2.indexOf(";", firstDiv + 1);
-            QString alt = line2.mid(0,firstDiv);
-            QString neu = line2.mid(firstDiv + 1, secDiv - firstDiv - 1);
-            QString surface = line2.mid(secDiv +1, -1);
-            mat eintrag;
-            eintrag.matnew = neu;
-            eintrag.matold = alt;
-            eintrag.surface = surface;
-            mat_list.push_back(eintrag);
-            //qDebug() << "Eingelesen: " << alt << neu << endl;
-            line2 = dbstream.readLine();
-        }
+
+        if (readMatDB(&db, &mat_list))
+            qDebug() << "readMatDB failed in startup" << endl;
+
         db.close();
     }
 }
