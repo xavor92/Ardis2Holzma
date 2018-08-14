@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "editmatdb.h"
+#include "matdb.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -35,11 +38,16 @@ private slots:
     void on_changePathSavingButton_clicked();
     void on_SaveDBButton_clicked();
 
+    void on_EditMatDBButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void updatePathInputFile(QString path);
     void updatePathOutputFile(QString path);
     void closeEvent (QCloseEvent *event);
+    EditMatDB *editMatDBWindow;
+    MatDB *matDB;
+    QList<mat_t> *mat_list;
 };
 
 #endif // MAINWINDOW_H
