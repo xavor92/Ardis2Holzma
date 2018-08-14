@@ -502,7 +502,7 @@ void MainWindow::on_SaveDBButton_clicked()
         dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
         QTextStream out(&dbFile);
         for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
-            if (!iterate_mat->matold.isEmpty())
+            if (!iterate_mat->matold.isEmpty() && !iterate_mat->matnew.isEmpty())
                 out << iterate_mat->matold << ";" << iterate_mat->matnew << ";" << iterate_mat->surface << endl;
         }
         dbFile.close();

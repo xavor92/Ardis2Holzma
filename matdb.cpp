@@ -23,7 +23,7 @@ QVariant MatDB::data(const QModelIndex &index, int role) const
 
     mat_t *mat = &(*mat_list)[row];
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
         switch(col)
         {

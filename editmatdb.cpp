@@ -18,3 +18,9 @@ EditMatDB::~EditMatDB()
 {
     delete ui;
 }
+
+void EditMatDB::on_buttonBox_clicked(QAbstractButton *button)
+{
+    (void)(button);
+    this->close();
+}

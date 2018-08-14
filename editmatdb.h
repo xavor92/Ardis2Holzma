@@ -1,6 +1,7 @@
 #ifndef EDITMATDB_H
 #define EDITMATDB_H
 
+#include <QAbstractButton>
 #include <QDialog>
 #include <QList>
 
@@ -17,6 +18,9 @@ class EditMatDB : public QDialog
 public:
     explicit EditMatDB(QWidget *parent = 0, MatDB *mat_db = 0);
     ~EditMatDB();
+
+private slots:
+    void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
     Ui::EditMatDB *ui;
