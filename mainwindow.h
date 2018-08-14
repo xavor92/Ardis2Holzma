@@ -47,7 +47,7 @@ private:
     void closeEvent (QCloseEvent *event);
     EditMatDB *editMatDBWindow;
     MatDB *matDB;
-    QList<mat> *mat_list;
+    QList<mat_t> *mat_list;
 };
 
 #endif // MAINWINDOW_H

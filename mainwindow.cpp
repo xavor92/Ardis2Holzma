@@ -79,7 +79,7 @@ void MainWindow::updatePathOutputFile(QString path)
     settings.sync();
 }
 
-static int readMatDB(QFile *dbfile, QList<mat> *matlist)
+static int readMatDB(QFile *dbfile, QList<mat_t> *matlist)
 {
     QTextStream dbstream(dbfile);
     QString line2 = dbstream.readLine();
@@ -90,7 +90,7 @@ static int readMatDB(QFile *dbfile, QList<mat> *matlist)
         QString alt = line2.mid(0,firstDiv);
         QString neu = line2.mid(firstDiv + 1, secDiv - firstDiv - 1);
         QString surface = line2.mid(secDiv +1, -1);
-        mat eintrag;
+        mat_t eintrag;
         eintrag.matnew = neu;
         eintrag.matold = alt;
         eintrag.surface = surface;
@@ -452,7 +452,7 @@ void MainWindow::on_convertButton_clicked()
         return;
     }
     QList<part>::iterator iterate_obj = obj_list.begin();
-    QList<mat>::iterator iterate_mat = mat_list->begin();
+    QList<mat_t>::iterator iterate_mat = mat_list->begin();
     bool new_materials = false;
     for(iterate_obj = obj_list.begin(); iterate_obj != obj_list.end(); iterate_obj++){
         for(iterate_mat = mat_list->begin(); iterate_mat != mat_list->end();iterate_mat++){
@@ -463,7 +463,7 @@ void MainWindow::on_convertButton_clicked()
             }
             if(iterate_mat == --mat_list->end()){
                 // we reached the end of the material list, this must be a new one
-                mat new_mat;
+                mat_t new_mat;
                 new_mat.matold = iterate_obj->MAT;
                 mat_list->push_back(new_mat);
                 new_materials = true;
@@ -476,7 +476,7 @@ void MainWindow::on_convertButton_clicked()
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen.\nWollen sie die neuen Materialen jetzt definieren?\nWenn sie 'Nein' wählen, werden die Materialien unverändert übernommen.");
         if (reply == QMessageBox::Yes){
-            QList<mat>::iterator iterate_mat = mat_list->begin();
+            QList<mat_t>::iterator iterate_mat = mat_list->begin();
             for(iterate_mat = mat_list->begin();iterate_mat != mat_list->end(); iterate_mat++){
                 if(iterate_mat->matnew.isEmpty()){
                     QDialog dialog(this);
@@ -530,7 +530,7 @@ void MainWindow::on_SaveDBButton_clicked()
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Aktuelle Materialdatenbank speichern?", "Soll die aktuelle Datenbank geschrieben werden?");
     if (reply == QMessageBox::Yes){
-        QList<mat>::iterator iterate_mat = mat_list->begin();
+        QList<mat_t>::iterator iterate_mat = mat_list->begin();
         QFile dbFile(ui->dbLine->text());
         dbFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
         QTextStream out(&dbFile);

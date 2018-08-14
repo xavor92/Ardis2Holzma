@@ -3,12 +3,12 @@
 MatDB::MatDB(QObject *parent)
     :QAbstractTableModel(parent)
 {
-    mat_list = new QList<mat>();
+    mat_list = new QList<mat_t>();
 }
 
 int MatDB::rowCount(const QModelIndex & /*parent*/) const
 {
-   return 2;
+   return mat_list->length();
 }
 
 int MatDB::columnCount(const QModelIndex & /*parent*/) const
@@ -18,11 +18,26 @@ int MatDB::columnCount(const QModelIndex & /*parent*/) const
 
 QVariant MatDB::data(const QModelIndex &index, int role) const
 {
+    int row = index.row();
+    int col = index.column();
+
+    mat_t *mat = &(*mat_list)[row];
+
     if (role == Qt::DisplayRole)
     {
-       return QString("Row%1, Column%2")
-                   .arg(index.row() + 1)
-                   .arg(index.column() +1);
+        switch(col)
+        {
+        case 0:
+            return mat->matold;
+            break;
+        case 1:
+            return mat->matnew;
+            break;
+        case 2:
+            return mat->surface;
+            break;
+        }
+
     }
     return QVariant();
 }

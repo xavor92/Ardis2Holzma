@@ -5,11 +5,11 @@
 #include <QString>
 
 //Material
-struct mat {
+typedef struct {
     QString matold;
     QString matnew;
     QString surface;
-};
+} mat_t;
 
 
 class MatDB : public QAbstractTableModel
@@ -24,7 +24,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
 /*  bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);  */
-    QList<mat> *mat_list;
+    QList<mat_t> *mat_list;
 };
 
 #endif // MATDB_H
