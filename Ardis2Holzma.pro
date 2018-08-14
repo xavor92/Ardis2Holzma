@@ -12,10 +12,13 @@ TARGET = Ardis2Holzma
 TEMPLATE = app
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    editmatdb.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    editmatdb.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    editmatdb.ui
 
 QMAKE_CXXFLAGS += -Wall

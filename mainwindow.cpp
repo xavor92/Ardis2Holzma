@@ -745,3 +745,9 @@ void MainWindow::downloaderData(){
     ui->downloadProgress->setMaximum(max);
     ui->downloadProgress->setValue(status);
 }
+
+void MainWindow::on_EditMatDBButton_clicked()
+{
+    editMatDBWindow = new EditMatDB();
+    editMatDBWindow->show();
+}
