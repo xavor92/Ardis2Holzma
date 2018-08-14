@@ -460,10 +460,11 @@ void MainWindow::on_convertButton_clicked()
         for(iterate_mat = mat_list.begin(); iterate_mat != mat_list.end();iterate_mat++){
             //qDebug() << iterate_obj->number <<"Vergleiche: " << iterate_obj->MAT << " mit " << iterate_mat->matold<< endl;
             if(iterate_obj->MAT == iterate_mat->matold) {
-                //qDebug() << "Found:" << iterate_obj->MAT << " = " << iterate_mat->matold << endl;
+                // we already know this material, check next object
                 break;
             }
             if(iterate_mat == --mat_list.end()){
+                // we reached the end of the material list, this must be a new one
                 mat new_mat;
                 new_mat.matold = iterate_obj->MAT;
                 mat_list.push_back(new_mat);
