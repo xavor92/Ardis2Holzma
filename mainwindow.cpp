@@ -61,7 +61,7 @@ QList<sheet>::iterator ite;
 sheet open_sheet;
 QString infileName, outfileName, line_n, dbfileName, infileFileName;
 QString L, B, L_conv, B_conv, A, R, REF, ID, BEM;
-bool mat_changed = false;
+bool conversion_done = false;
 bool service_mode = false;
 QProcess downloader;
 
@@ -342,7 +342,7 @@ void MainWindow::on_infileLine_textChanged()
         line = in.readLine();
     }
     ui->convertButton->setEnabled(true);
-    mat_changed = false;
+    conversion_done = false;
     QString count = QString::number(obj_list.size());
     ui->obj_count->setText(count);
     select_list.clear();
@@ -442,7 +442,7 @@ void MainWindow::on_dbButton_clicked()
 
 void MainWindow::on_convertButton_clicked()
 {
-    if(mat_changed){
+    if(conversion_done){
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Bereits umgewandelt", "Die Materialen wurden bereits umgewandelt, wollen sie sie wirklich ein weiteres Mal umwandeln?");
         if (reply == QMessageBox::No){
@@ -472,7 +472,7 @@ void MainWindow::on_convertButton_clicked()
             }
         }
     }
-    mat_changed = true;
+    conversion_done = true;
     if(new_materials){
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Neue Materialien", "Es gibt noch unbekannte Materialen.\nWollen sie die neuen Materialen jetzt definieren?\nWenn sie 'Nein' wählen, werden die Materialien unverändert übernommen.");
