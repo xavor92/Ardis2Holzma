@@ -60,3 +60,33 @@ QVariant MatDB::headerData(int section, Qt::Orientation orientation, int role) c
     }
     return QVariant();
 }
+
+bool MatDB::setData(const QModelIndex & index, const QVariant & value, int role)
+{
+    if (role == Qt::EditRole)
+    {
+        int row = index.row();
+        int col = index.column();
+
+        mat_t *mat = &(*mat_list)[row];
+
+        switch(col)
+        {
+        case 0:
+            mat->matold = value.toString();
+            break;
+        case 1:
+            mat->matnew = value.toString();;
+            break;
+        case 2:
+            mat->surface = value.toString();;
+            break;
+        }
+    }
+    return true;
+}
+
+Qt::ItemFlags MatDB::flags(const QModelIndex & /*index*/) const
+{
+    return Qt::ItemIsSelectable |  Qt::ItemIsEditable | Qt::ItemIsEnabled ;
+}
